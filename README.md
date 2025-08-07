@@ -1,4 +1,4 @@
-# 🌐 My Django Web App
+# 🌐 Simple Checklist Web App
 
 A simple Django-based web application for adding tasks to a checklist
 
