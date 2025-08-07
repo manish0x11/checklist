@@ -1,5 +1,73 @@
-venv/
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+*.pyo
+*.pyd
+*.pdb
 
+# Django
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media/
+staticfiles/
+local_settings.py
+
+# Environment
+.env
+.env.*
+
+# Pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual Environments
+venv/
+ENV/
+env/
+.venv/
+
+# VS Code
+.vscode/
+
+# PyCharm
 .idea/
 
-db.sqlite3
+# MacOS/Linux
+.DS_Store
+ehthumbs.db
+Thumbs.db
+
+# Tests
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+.nox/
+.pytest_cache/
+
+# MyPy / Pylint / Bandit
+.mypy_cache/
+.pytype/
+pylint-report.txt
+bandit-report.json
+
+# Build and distribution
+build/
+dist/
+*.egg-info/
+*.manifest
+*.spec
+
+# Docker
+*.log
+docker-compose.override.yml
+
+# Node (if using frontend with npm)
+node_modules/
+npm-debug.log
+yarn-error.log
