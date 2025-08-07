@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Tasks</h2>
+
+  <!-- 🔼 Add Task Form -->
+  <form method="post" class="mb-4 d-flex gap-2">
+    {% csrf_token %}
+    <input type="text" name="name" class="form-control" placeholder="Enter task name" required>
+    <button type="submit" class="btn btn-primary">Add Task</button>
+  </form>
+
+  <!-- ✅ Today’s Tasks -->
+  <h4>Today</h4>
+  <ul class="list-group mb-4">
+    {% for task in today_tasks %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <strong>{{ task.name }}</strong><br>
+          <small class="text-muted">Created at: {{ task.created_at|date:"M. j, Y, g:i a" }}</small><br>
+          {% if task.completed_at %}
+            <small class="text-success">Completed at: {{ task.completed_at|date:"M. j, Y, g:i a" }}</small>
+          {% endif %}
+        </div>
+        <form method="post" action="{% url 'toggle-status' task.id %}">
+          {% csrf_token %}
+          <input type="checkbox" name="status"
+                 {% if task.status %}checked{% endif %}
+                 onchange="this.form.submit();">
+        </form>
+      </li>
+    {% empty %}
+      <li class="list-group-item">No tasks today.</li>
+    {% endfor %}
+  </ul>
+
+  <!-- 🗓 Previous Days (Grouped by Date) -->
+  <h4>Previous Days</h4>
+  {% regroup previous_tasks by created_at.date as day_groups %}
+  {% for day in day_groups %}
+    <h5 class="mt-4">{{ day.grouper|date:"M j, Y (D)" }}</h5>
+    <ul class="list-group mb-3">
+      {% for task in day.list %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ task.name }}</strong><br>
+            <small class="text-muted">Created at: {{ task.created_at|date:"M. j, Y, g:i a" }}</small><br>
+            {% if task.completed_at %}
+              <small class="text-success">Completed at: {{ task.completed_at|date:"M. j, Y, g:i a" }}</small>
+            {% endif %}
+          </div>
+          <form method="post" action="{% url 'toggle-status' task.id %}">
+            {% csrf_token %}
+            <input type="checkbox" name="status"
+                   {% if task.status %}checked{% endif %}
+                   onchange="this.form.submit();">
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% empty %}
+    <p>No previous tasks.</p>
+  {% endfor %}
+</div>
+{% endblock %}
+
+
+
+
+
